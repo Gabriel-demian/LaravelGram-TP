@@ -11,22 +11,20 @@ class ReporteController extends Controller
 {
 
     public function store(Request $request, User $user, Post $post){
-        //dd($post->user->username);
-        //dd('denunciante: ' . auth()->user()->id . '/ ' . 'denunciado: ' . $post->user_id . '/ ' . 'post_id: ' . $post->id);
-
-        //Validar
-        //$this->validate($request, [
-        //    'motivo' => 'required|max:255'
-        //]);
-
-        //almacenar el resultado
         
+        if($request->motivo === null){
+            $motivo = 'sin motivo';
+        }else{
+            $motivo = $request->motivo;
+        }
+
+
         Reporte::create([
             'denunciante' => auth()->user()->id,
             'denunciado' => $post->user_id,
             'username' => $post->user->username,
             'post_id' => $post->id,
-            'motivo' => 'foto a revisar',
+            'motivo' => $motivo,
             'estado' => 'abierto'
         ]); 
 
