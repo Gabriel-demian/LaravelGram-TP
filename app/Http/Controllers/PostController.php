@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Reporte;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
@@ -80,6 +82,8 @@ class PostController extends Controller
     }
 
     public function destroy(Post $post){
+
+        
         $this->authorize('delete', $post);
         $post->delete();
 
@@ -87,6 +91,11 @@ class PostController extends Controller
         $imagen_path = public_path('uploads/' . $post->imagen);
         if(File::exists($imagen_path)){
             unlink($imagen_path);
+        }
+
+        if(auth()->user()->categoria === 'administrador'){
+            DB::table('reportes')->where('post_id', $post->id)->update(array('estado' => 'cerrado'));
+            return redirect()->route('home');  
         }
 
         return redirect()->route('post.index', auth()->user()->username);

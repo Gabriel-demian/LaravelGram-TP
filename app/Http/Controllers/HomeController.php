@@ -3,20 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Reporte;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
-    public function __invoke(){
+    public function __invoke()
+    {
 
-        if(auth()->user()->categoria === 'administrador'){
+        if (auth()->user()->categoria === 'administrador') {
             //TODO  ADMINISTRADOR!!!
-           return view('reportes');
+
+            $reports = Reporte::all();
+
+            return view('reportes', [
+                'reportes' => $reports
+            ]);
         }
 
         //Obtener a quienes seguimos
@@ -26,10 +34,8 @@ class HomeController extends Controller
         $posts = Post::whereIn('user_id', $ids)->latest()->paginate(20);
 
         //le pasamos la informacion a la vista
-        return view('home',[
+        return view('home', [
             'posts' => $posts
         ]);
-        
-        
     }
 }
