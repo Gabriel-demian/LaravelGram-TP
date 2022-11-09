@@ -27,6 +27,10 @@ class LoginController extends Controller
             //with() llena la sesión que se retorna. 
             return back()->with('mensaje','Credenciales Incorrectas.');
         }
+        if(auth()->user()->categoria === 'administrador'){
+            return redirect()->route('home');
+        }
+        
 
         //TODO -> redireccionar a vistas diferentes dependiendo de los permisos de usuario normal o administrador
         return redirect()->route('post.index', auth()->user()->username);
