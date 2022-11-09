@@ -32,13 +32,15 @@
                         <td class="border px-6 py-4 text-center">{{$reporte->estado}}</td>
                         <td class="border px-6 py-4 text-center">
                             <form action="{{ route('posts.show', ['post' => $reporte->post_id, 'user' => $reporte->username]) }}" >
-                                <input type="submit" value="Go to post" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" />
+                                <input type="submit" value="Ir Post" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" />
                             </form>
                         </td>
-
-                        @endforeach
                     </tr>
+                @endforeach
             </table>
+            <div class="my-10">
+                {{ $reportes->links('pagination::tailwind') }}   <!-- Para el páginado, genera la lista -->
+            </div>
         </div>
         
     @else

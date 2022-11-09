@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Reporte;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -18,9 +19,10 @@ class HomeController extends Controller
     {
 
         if (auth()->user()->categoria === 'administrador') {
-            //TODO  ADMINISTRADOR!!!
+            
+            //$reports = Reporte::orderBy('estado', 'ASC')->get();
+            $reports = DB::table('reportes')->orderBy('estado', 'ASC')->paginate(3);
 
-            $reports = Reporte::all();
 
             return view('reportes', [
                 'reportes' => $reports

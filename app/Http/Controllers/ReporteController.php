@@ -11,13 +11,12 @@ class ReporteController extends Controller
 {
 
     public function store(Request $request, User $user, Post $post){
-        
+
         if($request->motivo === null){
             $motivo = 'sin motivo';
         }else{
             $motivo = $request->motivo;
         }
-
 
         Reporte::create([
             'denunciante' => auth()->user()->id,
