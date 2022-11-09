@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Reporte;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ReporteController extends Controller
 {
@@ -27,6 +28,19 @@ class ReporteController extends Controller
             'estado' => 'abierto'
         ]); 
 
+        $email = 'reportes@laravelgram.com';
+        $asunto = 'Nuevo reporte creado';
+        $para = 'administradores@gmail.com';
+
+
+        Mail::send('email.correo', 
+            ['mensajeEmail' => 'Se reportó la publicación : ' . $post->id. ' del usuario:  ' . $post->user_id . '('. $post->user->username .') por el motivo: ' . $motivo],
+            function($msg) use($asunto,$para, $email){
+                $msg->from($email);
+                $msg->subject($asunto);
+                $msg->to($para);
+        });
+        
         return back()->with('mensaje', 'Denuncia realizada con éxito');
     }
 }

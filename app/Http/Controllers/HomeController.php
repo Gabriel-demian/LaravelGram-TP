@@ -19,9 +19,9 @@ class HomeController extends Controller
     {
 
         if (auth()->user()->categoria === 'administrador') {
-            
+
             //$reports = Reporte::orderBy('estado', 'ASC')->get();
-            $reports = DB::table('reportes')->orderBy('estado', 'ASC')->paginate(3);
+            $reports = DB::table('reportes')->orderBy('estado', 'ASC')->paginate(4);
 
 
             return view('reportes', [

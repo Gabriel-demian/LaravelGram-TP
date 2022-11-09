@@ -7,10 +7,12 @@ use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReporteController;
+use App\Mail\TestEmail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +38,9 @@ Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 Route::get('/editar-perfil', [PerfilController::class, 'index'])->name('perfil.index');
 Route::post('/editar-perfil', [PerfilController::class, 'store'])->name('perfil.store');
 
+Route::get('/send-mail', [MailController::class, 'index']);
+
+
 Route::get('/{user:username}', [PostController::class, 'index'])->name('post.index');
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
@@ -56,7 +61,6 @@ Route::delete('/{user:username}/unfollow', [FollowerController::class, 'destroy'
 
 //reportes
 Route::post('/posts/{post}/reporte', [ReporteController::class, 'store'])->name('posts.reporte.store');
-
 
 
 
